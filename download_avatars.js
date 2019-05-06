@@ -1,12 +1,28 @@
-var request = require('request');
+var request = require("request");
+var gitHubToken = require("secrets.js");
 
-console.log('Welcome to GitHub Avatar Downloader!');
+console.log("Welcome to GitHub Avatar Downloader!");
 
-function getRepoContributors(reboOwner, repoName, cb) {
+// implents request to fetch list of contributors for the given repo
+function getRepoContributors(repoOwner, repoName, cb) {
+  var options = {
+    url: "https://api.github.com/repos/" + repoOwner + "/" + repoName + "/contributors",
+    headers: {
+      "User-Agent": "request"
+      "Authorization": "token " + gitHubToken
+    }
+  };
 
+  request(options, function(err, res, body){
+    cb(err, body);
+  });
 }
 
+// invokes function above using callback
 getRepoContributors("jquery", "jquery", function(err, result) {
   console.log("Errors:", err);
   console.log("Result:", result);
 });
+
+
+
