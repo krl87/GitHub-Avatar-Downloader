@@ -1,3 +1,4 @@
+//importing modules to get access to files/functions/data
 var request = require("request");
 var gitHubToken = require("./secrets.js");
 var fs = require("fs");
@@ -28,12 +29,15 @@ function downloadImageByURL(url, filePath) {
 getRepoContributors("jquery", "jquery", function(err, result) {
   console.log("Errors:", err);
   var data = JSON.parse(result);
+  console.log(data);
+  //loops through array and retrieves avatar link
   for (var i = 0; i < data.length; i++) {
     console.log(data[i].avatar_url);
+    downloadImageByURL(data[i].avatar_url, "avatars/" + data[i].login + ".jpg");
   }
 });
 
-downloadImageByURL("https://avatars2.githubusercontent.com/u/2741?v=3&s=466", "avatars/kvirani.jpg");
+
 
 
 
